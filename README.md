@@ -18,7 +18,10 @@ pip install -r requirements.txt
 
 4. Load your script in the `Tools > scripts` menu in OBS Studio. 
 
-5. Make sure to have more than 1 scene in your stream. Once you start streaming and then switch scenes then you will tweet out your stream!
+5. Make sure to have more than 1 scene in your stream. Once you start streaming and then switch scenes then you will tweet out your stream! Once your stream is over, it will send out an ending tweet with the elapsed duration of the stream.
+
+## Customization
+To customize the tweet that you post, be sure to change the variables `start_tweet` and `end_tweet`
 
 
 

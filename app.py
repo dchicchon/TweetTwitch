@@ -2,15 +2,15 @@ from dotenv import dotenv_values
 from twypy.api import Api
 
 obs = obspython
-streaming = ''
+streaming = False
 client = ''
+start_tweet = 'Starting Coding Stream! Check it out here: https://www.twitch.tv/dannychicchon'
+end_tweet = 'Ending Coding Stream!'
 
 def script_load(settings):
     global client
-    global streaming
     print('script load')
     config = dotenv_values('.env')
-    streaming = False
     client = Api(config['TWITTER_API_KEY'], config['TWITTER_SECRET'],
                  config['TWITTER_ACCESS_TOKEN'], config['TWITTER_TOKEN_SECRET'])
     sh = obs.obs_get_signal_handler()
@@ -30,14 +30,12 @@ def source_deactivated(cd):
         send_end_tweet()
 
 def send_end_tweet():
-    tweet = 'Ending Coding Stream!'
-    print(tweet)
-    client.api.statuses.update.post(status=tweet) 
+    print(end_tweet)
+    client.api.statuses.update.post(status=end_tweet) 
 
 def send_start_tweet():
-    tweet = 'Starting Coding Stream! Check it out here: https://www.twitch.tv/dannychicchon'
-    print(tweet)
-    client.api.statuses.update.post(status=tweet) 
+    print(start_tweet)
+    client.api.statuses.update.post(status=start_tweet) 
 
 def script_description():
     return "Sending a tweet when stream starts and when stream ends"
