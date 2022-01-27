@@ -5,12 +5,10 @@ from pathlib import Path
 
 streaming = False
 client = ''
-start_tweet = ''
-end_tweet = ''
 
 class Data:
-    _start_tweet_  = None
-    _end_tweet_ = None
+    _start_tweet_  = ''
+    _end_tweet_ = ''
     _settings_ = None
 
 def script_description():
@@ -51,9 +49,9 @@ def source_deactivated(cd):
 
 def send_start_tweet():
     print(Data._start_tweet_)
-    client.api.statuses.update.post(status=start_tweet) 
+    client.api.statuses.update.post(status=Data._start_tweet_) 
 
 def send_end_tweet():
     print(Data._end_tweet_)
-    client.api.statuses.update.post(status=end_tweet) 
+    client.api.statuses.update.post(status=Data._end_tweet_) 
 
