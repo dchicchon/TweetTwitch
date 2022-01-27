@@ -1,11 +1,18 @@
 from dotenv import dotenv_values
 from twypy.api import Api
+import obspython as obs
+from pathlib import Path
 
-obs = obspython
 streaming = False
 client = ''
 start_tweet = ''
 end_tweet = ''
+
+class Data:
+    _start_tweet_  = None
+    _end_tweet_ = None
+    _settings_ = None
+
 def script_description():
     return "Sending a tweet when stream starts and when stream ends"
 
@@ -21,22 +28,14 @@ def script_load(settings):
 
 def script_properties():
     props = obs.obs_properties_create()
-    start = obs.obs_properties_add_text(props,'start_tweet','Start Tweet:', obs.OBS_TEXT_DEFAULT)
-    end = obs.obs_properties_add_text(props,'end_tweet','End Tweet:', obs.OBS_TEXT_DEFAULT)
-    obs.obs_property_set_modified_callback(start , start_tweet_callback)
-    obs.obs_property_set_modified_callback(end , end_tweet_callback)
+    obs.obs_properties_add_text(props,'start_tweet','Start Tweet:', obs.OBS_TEXT_DEFAULT)
+    obs.obs_properties_add_text(props,'end_tweet','End Tweet:', obs.OBS_TEXT_DEFAULT)
     return props
 
-def start_tweet_callback(props,prop, settings):
-    # startElm = obs.obs_properties_get(props,"start_tweet")
-    startText = obs.obs_data_get_string(settings,"start_tweet")
-    print(startText)
-    return True
-
-def end_tweet_callback(props, prop, settings):
-    endText = obs.obs_data_get_string(settings,"end_tweet")
-    print(endText)
-    return True
+def script_update(settings):
+    Data._start_tweet_ = obs.obs_data_get_string(settings, 'start_tweet')
+    Data._end_tweet_ = obs.obs_data_get_string(settings, 'end_tweet')
+    Data._settings_ = settings
 
 def source_activated(cd):
     global streaming
@@ -51,11 +50,10 @@ def source_deactivated(cd):
         send_end_tweet()
 
 def send_start_tweet():
-
-    print(start_tweet)
+    print(Data._start_tweet_)
     client.api.statuses.update.post(status=start_tweet) 
 
 def send_end_tweet():
-    print(end_tweet)
+    print(Data._end_tweet_)
     client.api.statuses.update.post(status=end_tweet) 
 
