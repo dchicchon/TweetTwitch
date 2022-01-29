@@ -24,7 +24,7 @@ pip install -r requirements.txt
 To customize the tweet that you post, be sure to change the variables `start_tweet` and `end_tweet`
 
 ## Video Tutorial
-// insert link here when i do the tutorial
+[Video Tutorial](https://www.youtube.com/watch?v=NKsmlSXHjHI)
 
 ## Stretch Goals
 - add elements on page to change the `start_tweet` and `end_tweet`
